@@ -1,5 +1,6 @@
 package com.formationandroid.bddwspreferences;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -64,6 +65,25 @@ public class MemosDAO
 		}
 		
 		return listeMemos;
+	}
+	
+	/**
+	 * Ajout d'un mémo en base de données.
+	 * @param context Context
+	 * @param intitule Intitulé
+	 */
+	public void ajouterMemo(Context context, String intitule)
+	{
+		// accès en écriture (insert, update, delete) :
+		DatabaseHelper databaseHelper = new DatabaseHelper(context);
+		SQLiteDatabase db = databaseHelper.getWritableDatabase();
+		
+		// objet de valeurs :
+		ContentValues values = new ContentValues();
+		values.put(BaseContrat.MemosContrat.COLONNE_INTITULE, intitule);
+		
+		// ajout :
+		long id = db.insert(BaseContrat.MemosContrat.TABLE_MEMOS, null, values);
 	}
 	
 }

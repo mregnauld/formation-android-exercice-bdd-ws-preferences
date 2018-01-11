@@ -44,12 +44,22 @@ public class MemosAdapter extends RecyclerView.Adapter<MemoViewHolder>
 	
 	/**
 	 * Ajout d'un mémo à la liste.
-	 * @param memoDTO Mémo
+	 * @param listeMemoDTO Liste de MemoDTO
 	 */
-	public void ajouterMemo(MemoDTO memoDTO)
+	public void actualiserMemos(List<MemoDTO> listeMemoDTO)
 	{
-		listeMemoDTO.add(0, memoDTO);
-		notifyItemInserted(0);
+		this.listeMemoDTO = listeMemoDTO;
+		notifyDataSetChanged();
+	}
+	
+	/**
+	 * Retourne le MemoDTO à la position indiquée.
+	 * @param position Position dans la liste
+	 * @return MemoDTO
+	 */
+	public MemoDTO getMemoDTOParPosition(int position)
+	{
+		return listeMemoDTO.get(position);
 	}
 	
 }
