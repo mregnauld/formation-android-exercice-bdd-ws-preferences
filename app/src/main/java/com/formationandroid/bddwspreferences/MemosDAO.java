@@ -71,8 +71,9 @@ public class MemosDAO
 	 * Ajout d'un mémo en base de données.
 	 * @param context Context
 	 * @param intitule Intitulé
+	 * @return ID mémo
 	 */
-	public void ajouterMemo(Context context, String intitule)
+	public long ajouterMemo(Context context, String intitule)
 	{
 		// accès en écriture (insert, update, delete) :
 		DatabaseHelper databaseHelper = new DatabaseHelper(context);
@@ -83,7 +84,7 @@ public class MemosDAO
 		values.put(BaseContrat.MemosContrat.COLONNE_INTITULE, intitule);
 		
 		// ajout :
-		long id = db.insert(BaseContrat.MemosContrat.TABLE_MEMOS, null, values);
+		return db.insert(BaseContrat.MemosContrat.TABLE_MEMOS, null, values);
 	}
 	
 }
