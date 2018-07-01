@@ -16,7 +16,7 @@ public class MemosDAO
 	 * @param context Context
 	 * @return Liste de MemoDTO
 	 */
-	public List<MemoDTO> getListeMemos(Context context)
+	public static List<MemoDTO> getListeMemos(Context context)
 	{
 		// projection (colonnes utilisées après la requète) :
 		String[] projection = {BaseContrat.MemosContrat._ID,
@@ -73,7 +73,7 @@ public class MemosDAO
 	 * @param intitule Intitulé
 	 * @return ID mémo
 	 */
-	public long ajouterMemo(Context context, String intitule)
+	public static long ajouterMemo(Context context, String intitule)
 	{
 		// accès en écriture (insert, update, delete) :
 		DatabaseHelper databaseHelper = new DatabaseHelper(context);
