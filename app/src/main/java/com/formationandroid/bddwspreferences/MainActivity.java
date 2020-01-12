@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.formationandroid.bddwspreferences.json.RetourWS;
+import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity
 	// Constantes :
 	private static final String TAG = MainActivity.class.getSimpleName();
 	private static final String LIEN = "https://httpbin.org/post";
-	private static final String CLE_FORM = "form";
 	private static final String CLE_MEMO = "memo";
 	private static final String CLE_POSITION = "position";
 	
@@ -107,16 +106,9 @@ public class MainActivity extends AppCompatActivity
 								  byte[] response)
 			{
 				String retour = new String(response);
-				try
-				{
-					JSONObject jsonObject = new JSONObject(retour);
-					JSONObject jsonObjectForm = jsonObject.getJSONObject(CLE_FORM);
-					Toast.makeText(MainActivity.this, jsonObjectForm.getString(CLE_MEMO), Toast.LENGTH_LONG).show();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
+				Gson gson = new Gson();
+				RetourWS retourWS = gson.fromJson(retour, RetourWS.class);
+				Toast.makeText(MainActivity.this, retourWS.form.memo, Toast.LENGTH_LONG).show();
 			}
 			
 			@Override
