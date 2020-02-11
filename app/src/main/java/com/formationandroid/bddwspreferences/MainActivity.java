@@ -45,12 +45,8 @@ public class MainActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		// création de la base de données, si inexistante :
-		DatabaseHelper databaseHelper = new DatabaseHelper(this);
-		databaseHelper.getReadableDatabase();
-		
 		// accès à la base de données :
-		List<MemoDTO> listeMemoDTO = MemosDAO.getListeMemos(this);
+		List<MemoDTO> listeMemoDTO = AppDatabaseHelper.getDatabase(this).memosDAO().getListeMemos();
 		
 		// vues :
 		recyclerView = findViewById(R.id.liste_memos);
@@ -126,14 +122,13 @@ public class MainActivity extends AppCompatActivity
 	 */
 	public void onClickBoutonValider(View view)
 	{
-		// intitulé du mémo :
-		String intitule = editTextMemo.getText().toString();
-		
 		// ajout du mémo en base :
-		MemosDAO.ajouterMemo(this, intitule);
+		MemoDTO memoDTO = new MemoDTO(editTextMemo.getText().toString());
+		AppDatabaseHelper.getDatabase(this).memosDAO().insert(memoDTO);
 		
-		// rechargement de la liste de mémos depuis la base de données (car le mémo n'est pas forcément ajouté en première position, la liste étant triée par ordre alphabétique) :
-		List<MemoDTO> listeMemoDTO = MemosDAO.getListeMemos(this);
+		// rechargement de la liste de mémos depuis la base de données (car le mémo n'est pas forcément ajouté en première position,
+		// la liste étant triée par ordre alphabétique) :
+		List<MemoDTO> listeMemoDTO = AppDatabaseHelper.getDatabase(this).memosDAO().getListeMemos();
 		
 		// mise à jour des mémos :
 		memosAdapter.actualiserMemos(listeMemoDTO);
